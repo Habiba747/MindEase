@@ -227,7 +227,8 @@ class _MoodJournalScreenState extends State<MoodJournalScreen> {
   }
 }
 
-// -------------------- JOURNAL HISTORY --------------------
+//  for history 
+
 class JournalHistory extends StatefulWidget {
   final List<Map<String, String>> entries;
 
@@ -323,3 +324,4 @@ class _JournalHistoryState extends State<JournalHistory> {
     );
   }
 }
+
