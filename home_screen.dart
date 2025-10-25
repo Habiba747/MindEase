@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'login_screen.dart';          // For logout navigation
-import 'mood_journal_screen.dart';   // For MoodJournalScreen
-import 'meditation_screen.dart';     // For MeditationScreen
-import 'progress_screen.dart';       // For ProgressScreen
+import 'login_screen.dart';         
+import 'mood_journal_screen.dart';   
+import 'meditation_screen.dart';     
+import 'progress_screen.dart';       
 
 
 class HomeScreen extends StatefulWidget {
@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xFFD2B48C),
         elevation: 2,
         actions: [
+         
           // Profile Icon
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
@@ -121,7 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      // -------------------- END DRAWER (Right Side) --------------------
+      //  DRAWER (Right Side) 
+      
       endDrawer: Drawer(
         child: Column(
           children: [
@@ -238,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      // -------------------- BODY + NAV BAR --------------------
+     
       body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
@@ -255,3 +257,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
