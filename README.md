@@ -41,6 +41,4 @@ Built with simplicity and mindfulness in mind, MindEase provides a peaceful digi
 
 > Includes a daily motivational quote and fun confetti animation for milestones.
 
-Displays emotional progress and journaling streaks using interactive charts built with fl_chart.
 
-Includes a daily motivational quote and fun confetti animation for milestones.
