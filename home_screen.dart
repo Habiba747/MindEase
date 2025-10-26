@@ -1,12 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'login_screen.dart';         
-import 'mood_journal_screen.dart';   
-import 'meditation_screen.dart';     
-import 'progress_screen.dart';       
-
+import 'login_screen.dart';
+import 'mood_journal_screen.dart';
+import 'meditation_screen.dart';
+import 'progress_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,10 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final userBox = Hive.box('userBox');
-    final currentUser = userBox.get('currentUser');
-    String profileInitial = currentUser != null && currentUser.isNotEmpty
-        ? currentUser[0].toUpperCase()
-        : "?";
+    final currentUser = userBox.get('currentUser') ?? "";
+    String profileInitial =
+        currentUser.isNotEmpty ? currentUser[0].toUpperCase() : "?";
 
     return Scaffold(
       appBar: AppBar(
@@ -39,13 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xFFD2B48C),
         elevation: 2,
         actions: [
-         
-          // Profile Icon
+          // Profile Icon with Popup
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: GestureDetector(
               onTap: () {
-                // When user taps on profile picture, show popup dialog
+                if (currentUser.isEmpty) return; // just safety
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
@@ -69,16 +64,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        Text(
+                        const Text(
                           "Logged in as",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[700],
-                          ),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          currentUser ?? "Guest User",
+                          currentUser,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -112,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          // Right-side Drawer Icon
+          // Drawer Menu Button
           Builder(
             builder: (context) => IconButton(
               icon: const Icon(Icons.menu, color: Colors.white),
@@ -122,8 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
 
-      //  DRAWER (Right Side) 
-      
+      // END DRAWER 
       endDrawer: Drawer(
         child: Column(
           children: [
@@ -132,13 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Color(0xFFD2B48C),
               ),
               accountName: Text(
-                currentUser ?? "Guest User",
+                currentUser,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, color: Colors.white),
               ),
-              accountEmail: Text(
-                currentUser != null ? "Logged in" : "Not logged in",
-                style: const TextStyle(color: Colors.white70),
+              accountEmail: const Text(
+                "Logged in",
+                style: TextStyle(color: Colors.white70),
               ),
             ),
 
@@ -221,26 +212,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const Spacer(),
 
-            // Logout option at the bottom
-            if (currentUser != null)
-              ListTile(
-                leading: const Icon(Icons.logout, color: Colors.redAccent),
-                title: const Text("Logout"),
-                onTap: () {
-                  userBox.delete('currentUser');
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
-                    (route) => false,
-                  );
-                },
-              ),
+            // Logout (only if logged in)
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.redAccent),
+              title: const Text("Logout"),
+              onTap: () {
+                userBox.delete('currentUser');
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  (route) => false,
+                );
+              },
+            ),
           ],
         ),
       ),
 
-     
+      // NAV BAR 
       body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
@@ -257,4 +246,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
